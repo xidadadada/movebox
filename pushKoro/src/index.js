@@ -116,9 +116,8 @@ $("button").click(function(){
     create(); //创建地图
 })
 
-var box=$('.box div'); 
 create();//第一关地图
-
+var box=$('.box div'); 
 function create(){ //创建地图函数
     box.each(function(index){ //index的数量是固定的，是box div下面div的数量
          // 每次创建地图初始化div
@@ -129,13 +128,14 @@ function create(){ //创建地图函数
             box.eq(index).addClass('type'+builder[level][index]);
         }
     });
-    box.eq(origin[level]).addClass("pusher"); //皮卡丘位置
+    box.eq(origin[level]).addClass("pusher"); //推箱人 皮卡丘位置
 }
 
 $(document).keydown(function (e) {
     var key=e.which;
     switch(key){
-        //方向键上或者w
+        //col 的值为12，上下移动要12个div为一个周期
+        //方向键上或者w 
         case 87:
         case 38:
             move(-col);
@@ -156,7 +156,6 @@ $(document).keydown(function (e) {
             move(1);
         break;
     }
-
     setTimeout(win,500); //按键之后调判断是否过关
 });
 
