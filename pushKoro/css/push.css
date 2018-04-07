@@ -15,7 +15,6 @@
 }
 
 .box div{
-    /* div的默认大小 */
     float: left;
     width: 40px;
     height:40px;

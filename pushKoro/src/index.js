@@ -1,5 +1,3 @@
-
-// 初始化数据，为了第一次创建地图
 var col=12;//上下移动的div数量
 var level=0;//初始第一关
 var goalList=[4,3,4,4,3,5,5,6,5,4]; //每关箱子数量。
@@ -116,8 +114,9 @@ $("button").click(function(){
     create(); //创建地图
 })
 
-create();//第一关地图
-var box=$('.box div'); 
+var box=$('.box div');
+create();
+
 function create(){ //创建地图函数
     box.each(function(index){ //index的数量是固定的，是box div下面div的数量
          // 每次创建地图初始化div
@@ -128,14 +127,13 @@ function create(){ //创建地图函数
             box.eq(index).addClass('type'+builder[level][index]);
         }
     });
-    box.eq(origin[level]).addClass("pusher"); //推箱人 皮卡丘位置
+    box.eq(origin[level]).addClass("pusher"); //皮卡丘位置
 }
 
 $(document).keydown(function (e) {
     var key=e.which;
     switch(key){
-        //col 的值为12，上下移动要12个div为一个周期
-        //方向键上或者w 
+        //方向键上或者w
         case 87:
         case 38:
             move(-col);
@@ -156,6 +154,7 @@ $(document).keydown(function (e) {
             move(1);
         break;
     }
+
     setTimeout(win,500); //按键之后调判断是否过关
 });
 
@@ -184,8 +183,8 @@ function move(step){ //是否移动判断
     }
 }
 
-function win(){ //胜利条件判断
-    if($(".type1.type4").length===goal){ //推的箱子与关卡设置通过箱子对比
+function win(){
+    if($(".type1.type4").length===goal){
         if(level<9) {
             alert("666，挑战下一关吧--OBKoro1");
             level++; //关卡+1
