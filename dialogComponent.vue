@@ -1,8 +1,8 @@
 /*
  * @Author: OBKoro1 
  * @Date: 2018-04-22 16:03:36 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-04-22 16:08:30
+ * @Last Modified by: OBKoro1
+ * @Last Modified time: 2018-04-22 16:10:28
  * msg: 移动端弹窗组件，自定义标题、内容、位置。
  */
 <template>
