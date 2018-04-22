@@ -4,3 +4,6 @@
 
 
 ### [推箱子小游戏](http://obkoro1.com/simpleDemo/pushKoro/index.html)
+
+### [移动端弹窗组件](https://github.com/OBKoro1/simpleDemo/blob/master/dialogComponent.vue)
+
