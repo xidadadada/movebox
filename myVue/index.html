@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<head>
+    <title>仿Vue极简双向绑定</title>
+</head>
+<style>
+    #app {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <form>
+            <input type="text" v-model="testData1">
+        </form>
+        <h3>{{ testData1 }}</h3>
+        <h3 v-bind="number"></h3>
+        <form>
+            <input type="text" v-model="testData2">
+        </form>
+        <h3>{{ testData2 }}</h3>
+    </div>
+</body>
+
+<script>
+    function myVue(options) {
+        this._options(options);
+    };
+
+    myVue.prototype._options = function (options) {
+        this.$options = options; // 配置挂载
+        this.$el = document.querySelector(options.el); // 获取dom
+        this._data = options.data; // 数据挂载
+        this._watcherTpl = {}; // watcher池
+        this._observer(this._data);
+        this._compile(this.$el); // 模板编译 发布订阅
+    };
+
+    // 重写data 的 get set  更改数据的时候，触发watch 更新视图
+    myVue.prototype._observer = function (obj) {
+        var _this = this;
+        Object.keys(obj).forEach(key => { // 遍历数据
+            _this._watcherTpl[key] = []; // 创建一个函数池
+            var value = obj[key], binding = _this._watcherTpl[key];
+            if (Object.prototype.toString.call(value) === '[object Object]') {
+                _this._observer(value);
+            }
+            Object.defineProperty(_this._data, key, { // 绑定set get
+                configurable: true,  // 可以删除
+                enumerable: true, // 可以遍历
+                get() {
+                    console.log(`${key}获取值${value}`);
+                    return value;
+                },
+                set(newVal) {
+                    console.log(`${key}更新${newVal}`);
+                    if (value !== newVal) {
+                        value = newVal;
+                        binding.forEach((item) => {
+                            item.update();
+                            //  通过循环 触发watcher 的update  更新视图=> 更新dom数据  
+                        });
+                    }
+                }
+            })
+        });
+    }
+
+    myVue.prototype._compile = function (el) {
+        var _this = this, nodes = el.children;
+
+        for (var i = 0, len = nodes.length; i < len; i++) {
+            var node = nodes[i];
+            if (node.children.length) {
+                _this._compile(node);  // 递归深度遍历 dom树
+            }
+
+            // 如果有v-model属性，并且元素是INPUT或者TEXTAREA，我们监听它的input事件    
+            if (node.hasAttribute('v-model') && (node.tagName = 'INPUT' || node.tagName == 'TEXTAREA')) {
+                node.addEventListener('input', (function (key) {
+                    var attVal = node.getAttribute('v-model');
+                    _this._watcherTpl[attVal].push(new Watcher(
+                        'input',
+                        node,
+                        _this,
+                        attVal,
+                        'value'
+                    ));
+                    return function () {
+                        _this._data[attVal] = nodes[key].value;
+                    }
+                })(i));
+            }
+
+            var reg = /\{\{\s*([^}]+\S)\s*\}\}/g, txt = node.textContent;   // 正则匹配{{}}
+            if (reg.test(txt)) {
+                node.textContent = txt.replace(reg, (matched, placeholder) => {
+                    // matched匹配的文本节点包括{{}}, placeholder 是{{}}中间的属性名
+                    _this._watcherTpl[placeholder].push(new Watcher(  // 发布订阅 
+                        'text',
+                        node,
+                        _this,
+                        placeholder,
+                        'innerHTML'
+                    ));
+                    return _this._data[placeholder]; //将文本节点替换为data值
+
+                });
+            }
+        }
+    }
+
+    function Watcher(name, el, vm, val, attr) {
+        // watch监听了 v-bind+ v-model 放入对应的事件池
+        this.name = name;         // 指令名称，例如文本节点，该值设为"text"
+        this.el = el;             // 指令对应的DOM元素
+        this.vm = vm;             // myVue实例
+        this.val = val;           // 指令对应的值，本例如"number"
+        this.attr = attr;         //绑定的属性值，如value / innerHTML
+        this.update(); // 触发更改数据
+    }
+    Watcher.prototype.update = function () {
+        // 绑定dom的值更新为 $data的值  
+        this.el[this.attr] = this.vm._data[this.val];
+    }
+    window.onload = function () {
+        var app = new myVue({
+            el: '#app',
+            data: {
+                testData1: '仿Vue极简双向绑定1',
+                testData2: '仿Vue极简双向绑定2',
+                obj: {
+                    test: '啦啦啦',
+                }
+            }
+        })
+    }
+</script>
