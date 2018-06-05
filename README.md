@@ -1,14 +1,12 @@
 # 瞎搞
 
-### [文章列表](http://obkoro1.com/simpleDemo/article.md)
+### [博客文章分类列表](https://github.com/OBKoro1/simpleDemo/blob/master/article.md)
 
 ### [仿Vue极简双向绑定](http://obkoro1.com/simpleDemo/myVue/index.html)
 
 ### [VsCode头部注释插件-koroFileHeader](https://github.com/OBKoro1/koro1FileHeader/blob/b03ef6c8c5c61bd1276c45fe5f108ad92f3ee7b8/README_zh-cn.md)
 
 ### [推箱子小游戏](http://obkoro1.com/simpleDemo/pushKoro/index.html)
-
-### [博客链接](http://obkoro1.com/)
 
 ### 订阅号：
 
