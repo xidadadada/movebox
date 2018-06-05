@@ -1,6 +1,8 @@
 # 瞎搞
 
-### [博客文章分类列表](https://github.com/OBKoro1/simpleDemo/blob/master/article.md)
+这里是自己瞎搞的一些小东西，如果觉得还ok的话可以给个 star ⭐️ 鼓励一下我吧~
+
+### [博客文章分类列表](https://github.com/OBKoro1/OBKoro1.github.io)
 
 ### [仿Vue极简双向绑定](http://obkoro1.com/simpleDemo/myVue/index.html)
 
