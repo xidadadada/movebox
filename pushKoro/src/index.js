@@ -116,6 +116,7 @@ $("button").click(function(){
 
 var box=$('.box div');
 create();
+_touch();
 
 function create(){ //创建地图函数
     box.each(function(index){ //index的数量是固定的，是box div下面div的数量
@@ -196,3 +197,54 @@ function win(){
         }
     }
 }
+
+function _touch(){
+    var startx;//让startx在touch事件函数里是全局性变量。
+    var endx;
+     //var el=document.getElementById('box');document.getElementsByTagName("body")[0] 
+     var el=document.getElementsByTagName("body")[0] ;
+    function cons(){   //独立封装这个事件可以保证执行顺序，从而能够访问得到应该访问的数据。
+           console.log(starty,endy);
+           var l=Math.abs(startx-endx);
+           var h=Math.abs(starty-endy);
+    
+          if(l>h){
+               // x事件
+               if(startx>endx){
+                    // alert('left');
+                   move(-1);
+               }else if(startx<endx){
+                    // alert('right');
+                   move(1);
+               }
+               
+          }else{
+               // y事件
+               if(starty>endy){
+                   // alert('top');
+                   move(-col);
+                    //$('.head').css('display','block');
+                    //$('.foot_box').css({'display':'block','bottom':'0px','top': 'inherit'});
+               }else if(starty<endy){
+                   // alert('bottom');
+                   move(col);
+                  // $('.head').css('display','none');
+                  // $('.foot_box').css({'display':'block','top':'0px','bottom': 'inherit'});
+               }
+          }
+
+     }
+     el.addEventListener('touchstart',function(e){
+          var touch=e.changedTouches;
+          startx=touch[0].clientX;
+          starty=touch[0].clientY;
+  });
+   el.addEventListener('touchend',function(e){
+       var touch=e.changedTouches;
+       endx=touch[0].clientX;
+       endy=touch[0].clientY;
+       cons();  //startx endx 的数据收集应该放在touchend事件后执行，而不是放在touchstart事件里执行，这样才能访问到touchstart和touchend这2个事件产生的startx和endx数据。另外startx和endx在_touch事件函数里是全局性的，所以在此函数中都可以访问得到，所以只需要注意事件执行的先后顺序即可。
+ });
+}
+
+
