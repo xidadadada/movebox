@@ -186,13 +186,13 @@ function move(step){ //是否移动判断
 function win(){
     if($(".type1.type4").length===goal){
         if(level<9) {
-            alert("666，挑战下一关吧--OBKoro1");
+            alert("666，挑战下一关吧--世界主席");
             level++; //关卡+1
             goal = goalList[level];
             position = origin[level];
             create();
         }else {
-            alert("厉害啊 大佬 通关了都");
+            alert("厉害啊 john 通关了");
         }
     }
 }
