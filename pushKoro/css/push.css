@@ -15,8 +15,6 @@
   }
 
 .box{
-   overflow: hidden; 
-   margin: 15vh auto 0; 
    height: 480px;
    width:  480px;
 }
