@@ -232,6 +232,8 @@ function _touch(){
                   // $('.foot_box').css({'display':'block','top':'0px','bottom': 'inherit'});
                }
           }
+        
+        setTimeout(win,500); //按键之后调判断是否过关
 
      }
      el.addEventListener('touchstart',function(e){
